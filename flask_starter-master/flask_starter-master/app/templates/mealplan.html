@@ -1,0 +1,47 @@
+﻿{% extends "base.html" %}
+
+{% block main %}
+<h2>Meal Plans</h2>
+{% include 'flash_messages.html' %}
+<div class="allproperties">
+<table>
+<thead>
+<tr>
+	<td>Day</td>
+	<td>Breakfast</td>
+	<td>Lunch</td>
+	<td>Dinner</td>
+	<td>Total Calories</td>
+</tr>
+</thead>
+{% for x in plan: %}
+  <div class="property">
+  <tr>
+		<td>{{x[4]}}</td>
+
+
+		<td>
+			{{x[0]}}
+		</td>
+		<td>
+			{{x[1]}}
+		</td>
+		<td>
+			{{x[2]}}
+		</td>
+
+
+
+
+		<td>
+			{{x[3]}}
+		</td>
+	</tr>
+  <p>
+   </p>
+  </div>
+  </div>
+{% endfor %}
+</div>
+</table>
+{% endblock %}

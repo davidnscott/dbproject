@@ -1,0 +1,17 @@
+﻿{% extends "base.html" %}
+
+{% block main %}
+  <div class="login-form center-block">
+    <h2>Please Log in</h2>
+    {% include 'flash_messages.html' %}
+    <form action="{{ url_for('getcaloriecount') }}" method="post" enctype="multipart/form-data">
+      {{ form.csrf_token }}
+	  
+      <div class="form-group">
+        {{ form.caloriecount.label }}
+        {{ form.caloriecount(class='form-control') }}
+      </div>
+      <a href="{{ url_for('mealplan' , caloriecount=caloriecount)}}" class="btn" id="viewprop">Generate</a>
+    </form>
+  </div>
+{% endblock %}

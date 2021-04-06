@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block main %}
+<form class="form-login" method="post">
+  <h2>Please sign in</h2>
+  {% if error %}
+    <div class="alert alert-danger">
+      <strong>Error:</strong> {{ error }}
+    </div>
+  {% endif %}
+  <div class="form-group">
+    <label for="email" class="sr-only">Email</label>
+    <input type="text" id="email" name="email" class="form-control" placeholder="Your email" required >
+  </div>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+</form>
+{% endblock %}
