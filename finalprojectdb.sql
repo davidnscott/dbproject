@@ -3,7 +3,6 @@ create database if not exists MealPlanOrganizer;
 use MealPlanOrganizer;
 
 create table User(
-    /*UserID int not null auto_increment,*/
     FirstName varchar(30),
     LastName varchar(30),
     Age int,
@@ -14,8 +13,9 @@ create table User(
 
 create table Instruction(
     InstructionID int not null auto_increment,
-    StepNum int,
-    Instruction varchar(300),
+    Step1 varchar(200),
+    Step2 varchar(200),
+	Step3 varchar(200),
     primary key(InstructionID)
 
 );
@@ -25,14 +25,12 @@ create table Instruction(
 create table Ingredients(
     IngredientID int not null auto_increment,
     IngredientName varchar(50),
-    Quantity int,
     Measurement varchar(50),
     primary key(IngredientID)
 
 );
 
 create table Recipe(
-    /*MealID varchar(8),*/
     RecID int not null auto_increment,
     InstructionID int,
     IngredientID int,
@@ -48,29 +46,24 @@ create table Recipe(
 create table Meal(
     MealID int not null auto_increment,
     RecID int,
-    /*MealPlanID int,*/
     NameofMeal varchar(30),
     TypeofMeal varchar(30),
     NumofCalories int,
 	ImageFileName varchar(50),
     primary key(MealID),
     foreign key (RecID) references Recipe(RecID) on delete cascade on update cascade
-	/*Foreign key (MealPlanID) references MealPlan(MealPlanID) on delete cascade on update cascade*/
 );
 
 create table MealPlan(
     Email varchar(200),
-    #MealID int,
 	breakfast varchar(30),
-	lucnch varchar(30),
+	lunch varchar(30),
 	dinner varchar(30),
     MealPlanID int not null auto_increment,
-    #NumofMeals int,
 	TotalCalories int,
     DayofWeek varchar(200),
     primary key(MealPlanID),
     foreign key (Email) references User(Email) on delete cascade on update cascade
-    #foreign key (MealID) references Meal(MealID) on delete cascade on update cascade
 
 );
 

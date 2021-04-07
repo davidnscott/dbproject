@@ -11,3 +11,4 @@ Flask-Script
 flask-mysql
 flask-mysqldb
 flask-login
+faker

@@ -1,0 +1,23 @@
+﻿{% extends "base.html" %}
+
+{% block main %}
+<h2>Kitchen</h2>
+{% include 'flash_messages.html' %}
+<div class="allproperties">
+<table>
+{% for i in range(len(names)): %}
+  <div class="property">
+  <tr>
+		<td>{{names[i]}}</td>
+		<td>
+			{{lst[i]}}
+		</td>
+	</tr>
+  <p>
+   </p>
+  </div>
+  </div>
+{% endfor %}
+</div>
+</table>
+{% endblock %}

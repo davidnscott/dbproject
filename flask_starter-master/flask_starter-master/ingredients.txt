@@ -1,0 +1,19 @@
+chicken
+flour
+beans
+rice
+bacon
+cheese
+ketchup
+mustard
+strawberry
+milk
+egg
+fish
+orange
+lime
+wheat
+vegetable oil
+sugar
+corn syrup
+vanilla extract

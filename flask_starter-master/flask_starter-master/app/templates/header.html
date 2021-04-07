@@ -1,10 +1,27 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-  <span class="navbar-brand mb-0 h1">My App</span>
+  <span class="navbar-brand mb-0 h1">Meal Plan Organizer</span>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mr-auto">
+	{% if  session['loggedin'] == True %}
+	<li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('ingredient') }}">ingredient <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('instruction') }}">instruction</a>
+      </li>
+	  <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('recipe') }}">recipe</a>
+      </li>
+	  <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('meal') }}">meal</a>
+      </li>
+	  <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('mealplan') }}">mealplan</a>
+      </li>
+	{% else %}
       <li class="nav-item active">
         <a class="nav-link" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
       </li>
@@ -14,6 +31,7 @@
 	  <li class="nav-item active">
         <a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a>
       </li>
+	{% endif %}
     </ul>
 	<ul class="navbar-nav">
 	{% if  session['loggedin'] == True %}

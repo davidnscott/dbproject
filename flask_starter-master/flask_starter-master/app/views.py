@@ -5,6 +5,8 @@ Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
 
+from faker import Faker
+import pandas as pd
 from app import app
 from flask import render_template, request, redirect, url_for,Flask, flash, session, send_from_directory
 from flask_login import login_user, logout_user, current_user, login_required
@@ -14,10 +16,12 @@ from datetime import date
 from werkzeug.utils import secure_filename
 import os
 import random
+#from fake import Faker
 
  
 
 mysql = MySQL(app)
+
 
 
 ###
@@ -174,15 +178,15 @@ def meal():
 		return render_template("home.html")
 	return render_template("meal.html", form=form)
 
-@app.route('/mealplan')
+#@app.route('/mealplan')
 def getcaloriecount():
 	form = CalorieForm()
 	if request.method == 'POST' and form.validate_on_submit():
 		caloriecount = request.form['caloriecount']
 	return render_template("caloriecount.html",form=form)
 
-@app.route('/mealplan/<caloriecount>')
-def mealplan(caloriecount):
+@app.route('/mealplan')
+def mealplan():
 	cursor = mysql.connection.cursor()
 	cursor.execute('''Delete from MealPlan where Email = %s ''',(session['email'],))
 	mysql.connection.commit()
@@ -191,7 +195,7 @@ def mealplan(caloriecount):
 		cals = []
 		meal = []
 		for i in range(3):
-			cursor.execute('''select MealID from Meal where NumofCalories <= %s''',(caloriecount,))
+			cursor.execute('''select MealID from Meal''')
 			meals = cursor.fetchall()
 			print("check\n\n\n\n",meals,len(meals),meals[0])
 			num = random.randint(0,len(meals)-1)
@@ -227,6 +231,29 @@ def mealpland():
 	plan = cursor.fetchall()
 	cursor.close()
 	return render_template("mealplan.html", plan=plan[:7])
+
+@app.route('/kitchen')
+def kitchen():
+	cursor = mysql.connection.cursor()
+	cursor.execute('''select IngredientName from Ingredients''')
+	names = cursor.fetchall()
+	lst = [False]*len(names)
+	cursor.execute('''select IngredientID  from kitchen where Email = %s''',(session['email'],))
+	lst2 = cursor.fetchall()
+	for i in lst2:
+		lst[i-1] = True
+	cursor.close()
+	return render_template("kitchen.html", lst=lst, names=names)
+
+def addingred(ingredid):
+	cursor = mysql.connection.cursor()
+	cursor.execute('''insert into kitchen(Email,IngredientID) Values(%s,%s)''',(session['email'],igredid))
+	cursor.close()
+
+def removeingred():
+	pass
+
+	
 
 def get_uploaded_images():
 	rootdir = os.getcwd()
