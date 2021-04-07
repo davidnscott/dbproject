@@ -2,32 +2,32 @@
 
 {% block main %}
   <div class="login-form center-block">
-    <h2>Please Log in</h2>
+    <h2>Add Recipe</h2>
     {% include 'flash_messages.html' %}
     <form action="{{ url_for('recipe') }}" method="post">
       {{ form.csrf_token }}
 	  
       <div class="form-group">
         {{ form.instrucid.label }}
-        {{ form.instrucid(class='form-control', placeholder="Enter Instruction ID") }}
+        {{ form.instrucid(class='form-control', placeholder="Enter Instruction ID.") }}
       </div>
 	  <div class="form-group">
         {{ form.ingredid.label }}
-        {{ form.ingredid(class='form-control', placeholder="Enter Ingredient ID") }}
+        {{ form.ingredid(class='form-control', placeholder="Enter Ingredient ID (1 - 18).") }}
       </div>
 	  <div class="form-group">
         {{ form.desc.label }}
-        {{ form.desc(class='form-control', placeholder="Enter description") }}
+        {{ form.desc(class='form-control', placeholder="Enter description.") }}
       </div>
 	  <div class="form-group">
         {{ form.typeofdiet.label }}
-        {{ form.typeofdiet(class='form-control', placeholder="Enter type of diet") }}
+        {{ form.typeofdiet(class='form-control', placeholder="Enter type of diet.") }}
       </div>
 	  <div class="form-group">
         {{ form.servings.label }}
-        {{ form.servings(class='form-control', placeholder="Enter servings") }}
+        {{ form.servings(class='form-control', placeholder="Enter servings.") }}
       </div>
-      <button type="submit" name="submit" class="btn btn-primary btn-block">Log in</button>
+      <button type="submit" name="submit" class="btn btn-primary btn-block">Add</button>
     </form>
   </div>
 {% endblock %}

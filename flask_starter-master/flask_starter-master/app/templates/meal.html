@@ -2,26 +2,26 @@
 
 {% block main %}
   <div class="login-form center-block">
-    <h2>Please Log in</h2>
+    <h2>Add Meal</h2>
     {% include 'flash_messages.html' %}
     <form action="{{ url_for('meal') }}" method="post" enctype="multipart/form-data">
       {{ form.csrf_token }}
 	  
       <div class="form-group">
         {{ form.recid.label }}
-        {{ form.recid(class='form-control') }}
+        {{ form.recid(class='form-control', placeholder="Enter recipe ID.") }}
       </div>
 	  <div class="form-group">
         {{ form.mealtype.label }}
-        {{ form.mealtype(class='form-control') }}
+        {{ form.mealtype(class='form-control', placeholder="Enter type of meal.") }}
       </div>
 	  <div class="form-group">
         {{ form.numofcals.label }}
-        {{ form.numofcals(class='form-control') }}
+        {{ form.numofcals(class='form-control', placeholder="Enter number of calories.") }}
       </div>
 	  <div class="form-group">
         {{ form.photo.label }}
-        {{ form.photo(class='form-control') }}
+        {{ form.photo(class='form-control', placeholder="Enter image") }}
       </div>
       <button type="submit" name="submit" class="btn btn-primary btn-block">Add</button>
     </form>

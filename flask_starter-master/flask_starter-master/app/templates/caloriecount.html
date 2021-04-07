@@ -2,16 +2,16 @@
 
 {% block main %}
   <div class="login-form center-block">
-    <h2>Please Log in</h2>
+    <h2>Create Meal Plan</h2>
     {% include 'flash_messages.html' %}
     <form action="{{ url_for('getcaloriecount') }}" method="post" enctype="multipart/form-data">
       {{ form.csrf_token }}
 	  
       <div class="form-group">
         {{ form.caloriecount.label }}
-        {{ form.caloriecount(class='form-control') }}
+        {{ form.caloriecount(class='form-control', placeholder="Enter the max calorie count.") }}
       </div>
-      <button type="submit">Generate</button>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
     </form>
   </div>
 {% endblock %}

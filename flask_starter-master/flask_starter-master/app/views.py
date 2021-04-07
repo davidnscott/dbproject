@@ -35,24 +35,20 @@ def home():
 @app.route('/about/')
 def about():
     """Render the website's about page."""
-    return render_template('about.html', name="Mary Jane")
+    return render_template('about.html', name="Kalia-Lee Rodney, Shaquan Robinson, Keneil Thompson, David Scott")
 
 @app.route('/logout')
 #@login_required
 def logout():
 	session.clear()
 	#logout_user()
-	flash("You have been logged out.")
 	return redirect(url_for("login"))
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
 	form = LoginForm()
-	print("suffering")
 	if request.method == "POST":
-		print("torment")
 		if form.email.data:
-			print("pain")
 			email = form.email.data
             #user = UserProfile.query.filter_by(email=email).first()
 			cursor = mysql.connection.cursor()
@@ -63,18 +59,16 @@ def login():
 			cursor.close()
 			print(user)
 			if user is not None:
-				print("pain2")
 				session['loggedin'] = True
 				session['email'] = user[4]
 				session['fname'] = user[0]
 				session['lname'] = user[1]
 				#login_user(user)
 				#flash("Login Successful","Success")
-				return redirect(url_for("instruction"))
+				flash("Logged in as "+session['fname']+" "+session['lname'])
+				return redirect(url_for("home"))
 			else:
-				print("pain3")
 				flash("User not found.")
-				print("not found")
 	return render_template("login.html", form=form)
 
 @app.route('/secure-page')
@@ -99,7 +93,7 @@ def signup():
 		cursor.close()
 		flash("Succesfully signed up!!")
 		return render_template("home.html")
-	return render_template("test.html", form=form)
+	return render_template("signup.html", form=form)
 
 @app.route('/ingredient', methods = ['POST', 'GET'])
 def ingredient():
@@ -129,8 +123,10 @@ def instruction():
 		cursor = mysql.connection.cursor()
 		cursor.execute(''' INSERT INTO Instruction (Step1,Step2,Step3) VALUES(%s,%s,%s)''',(step1, step2,step3))
 		mysql.connection.commit()
+		cursor.execute(''' Select max(InstructionID) from Instruction''')
+		id = cursor.fetchone()
 		cursor.close()
-		flash("Succesfully added recipe!!")
+		flash("Succesfully added Instruction with ID - "+str(id[0]))
 		return render_template("home.html")
 	return render_template("instruc.html", form=form)
 
@@ -151,8 +147,10 @@ def recipe():
 		#print(mealid,desc,numofcals,typeofdiet,servings,creationdate)
 		cursor.execute(''' INSERT INTO Recipe (InstructionID,IngredientID,CreationDate,RDescription,TypeofDiet,Servings) VALUES(%s,%s,%s,%s,%s,%s)''',(instrucid,ingredid,creationdate,desc,typeofdiet,servings))
 		mysql.connection.commit()
+		cursor.execute(''' Select max(RecID) from Recipe''')
+		id = cursor.fetchone()
 		cursor.close()
-		flash("Succesfully added recipe!!")
+		flash("Succesfully added Recipe with ID - "+str(id[0]))	
 		return render_template("home.html")
 	return render_template("recipe.html", form=form)
 	
@@ -231,8 +229,10 @@ def mealplan(caloriecount):
 		for i in range(3):
 			if int(caloriecount) >= minimumcalories[0]:
 				cursor.execute('''select MealID from Meal where numofcalories <= %s''',(caloriecount,))
-			cursor.execute('''select MealID from Meal''')
-			meals = cursor.fetchall()
+				meals = cursor.fetchall()
+			else:
+				cursor.execute('''select MealID from Meal''')
+				meals = cursor.fetchall()
 			print("check\n\n\n\n",meals,len(meals),meals[0])
 			num = random.randint(0,len(meals)-1)
 			print("check2",num)
@@ -283,6 +283,8 @@ def kitchen():
 		for i in lst:
 			cursor.execute('''insert into kitchen(ingredientid,email) values(%s,%s)''',(i,session['email']))
 		mysql.connection.commit()
+		flash("Succesfully updated your kitchen!!")
+		return render_template("home.html")
 	cursor.execute('''select IngredientName,IngredientID from Ingredients''')
 	names = cursor.fetchall()
 	lst = [False]*len(names)

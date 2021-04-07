@@ -11,18 +11,13 @@
   <tr>
 		<td>{{names[i][0]}}</td>
 		<td>
-			
-			<input type="checkbox" name="add" value="{{names[i][1]}}">
+		<input type="checkbox" name="add" value="{{names[i][1]}}">
 		</td>
-
 	</tr>
-	</form>
-  <p>
-   </p>
-  </div>
-  </div>
-{% endfor %}
-<button type="submit">submit</button>
-</div>
+  {% endfor %}
 </table>
+<button class="btn btn-lg btn-primary btn-block space" type="submit">Submit</button>
+</form>
+</div>
+
 {% endblock %}

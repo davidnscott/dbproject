@@ -39,11 +39,11 @@ class RecipeForm(FlaskForm):
 	servings = StringField('Servings', validators=[InputRequired()])
 
 class CalorieForm(FlaskForm):
-	caloriecount = StringField('Max Calorie Count')
+	caloriecount = StringField('Max Calorie Count for Each Meal')
 	
 class MealForm(FlaskForm):
 	#mealid = StringField('MealId',validators=[DataRequired()])
-	recid = StringField('Recipe Id', validators=[InputRequired()])
+	recid = StringField('Recipe ID', validators=[InputRequired()])
 	#name = StringField('Meal Name', validators=[DataRequired()])
 	mealtype = StringField('Type of Meal', validators=[DataRequired()])
 	#day = StringField('Day of the Week', validators=[DataRequired()])

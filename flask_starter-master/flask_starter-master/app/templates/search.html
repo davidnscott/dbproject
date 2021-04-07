@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block main %}
 <form action="{{ url_for('recipesearch') }}" method="post" enctype="multipart/form-data">
+  <h2>Search</h2>
       {{ form.csrf_token }}	  
       <div class="form-group">
-        {{ form.name.label }}
-        {{ form.name(class='form-control') }}
+        {{ form.name(class='form-control',placeholder="Enter recipe name.") }}
       </div>
       <button type="submit" name="submit" class="btn btn-primary btn-block">Search</button>
     </form>

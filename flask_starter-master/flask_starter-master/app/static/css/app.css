@@ -1,3 +1,44 @@
 body {
     padding-top: 50px;
 }
+h2{
+    padding-top: 25px;
+    padding-bottom: 40px;
+}
+table{
+    width: 100%;
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-transform: capitalize;
+}
+thead th:nth-child(1) {
+    color: blue;
+}
+  
+thead th:nth-child(2) {
+    color: green;
+}
+  
+thead th:nth-child(3) {
+    color: aquamarine;
+}
+  
+thead th:nth-child(4) {
+    color: brown;
+}
+thead th:nth-child(5) {
+    color: palevioletred;
+}
+th, td{
+    border: 1px solid black;
+    text-align: center;
+}
+th{
+    font-weight: bold;
+}
+.space {
+    margin-top: 20px;
+}
+.property{
+    text-transform: capitalize;
+}

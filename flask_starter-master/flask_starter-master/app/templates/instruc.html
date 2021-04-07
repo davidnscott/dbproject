@@ -2,22 +2,22 @@
 
 {% block main %}
   <div class="login-form center-block">
-    <h2>Please Log in</h2>
+    <h2>Add Instruction</h2>
     {% include 'flash_messages.html' %}
     <form action="{{ url_for('instruction') }}" method="post">
       {{ form.csrf_token }}
 	  
       <div class="form-group">
         {{ form.step1.label }}
-        {{ form.step1(class='form-control') }}
+        {{ form.step1(class='form-control', placeholder="Step 1")}}
       </div>
 	  <div class="form-group">
         {{ form.step2.label }}
-        {{ form.step2(class='form-control') }}
+        {{ form.step2(class='form-control', placeholder="Step 2")}}
       </div>
 	  <div class="form-group">
         {{ form.step3.label }}
-        {{ form.step3(class='form-control') }}
+        {{ form.step3(class='form-control', placeholder="Step 3")}}
       </div>
       <button type="submit" name="submit" class="btn btn-primary btn-block">Add</button>
     </form>

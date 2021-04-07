@@ -1,4 +1,4 @@
-/*drop database if exists MealPlanOrganizer;
+drop database if exists MealPlanOrganizer;
 create database if not exists MealPlanOrganizer;
 use MealPlanOrganizer;
 
@@ -92,7 +92,7 @@ begin
 select distinct(IngredientName) from Recipe natural join ingredients where IngredientID not in (select IngredientID from Kitchen) and IngredientID in (select IngredientID from mealplan natural join meal natural join recipe where email = email);
 END //
 DELIMITER ;
-*/
+
 DELIMITER //
 create procedure recipe_display (in id varchar(200))
 begin

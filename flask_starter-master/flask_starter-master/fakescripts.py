@@ -18,7 +18,7 @@ cursor = db_connection.cursor()
 def populate_database():
 	gender = ['Male','Female']
 	fake = Faker()
-	for i in range(20):
+	for i in range(200000):
 		fname = fake.first_name() 
 		lname = fake.last_name()
 		email = fake.unique.email()
@@ -26,7 +26,7 @@ def populate_database():
 		num = random.randint(0,1)
 		cursor.execute(''' INSERT INTO User (FirstName,LastName,Age,Gender,Email) VALUES(%s,%s,%s,%s,%s)''',(fname,lname,age,gender[num],email))
 
-	for i in range(10):
+	for i in range(1000):
 			step1 = fake.sentence()
 			step2 = fake.sentence()
 			step3 = fake.sentence()
@@ -77,7 +77,7 @@ def populate_database():
 	'sesame','Jelly','beans',
 	'pie','bar','Ice','oat','sweet','tasty','delicious' ]
 	db_connection.commit()
-	for i in range(60):
+	for i in range(600000):
 		instrucid = random.randint(1,instruccount[0])
 		ingredid = random.randint(1,ingredcount[0])
 		creationdate = fake.date_of_birth(tzinfo=None, minimum_age=0, maximum_age=5)
