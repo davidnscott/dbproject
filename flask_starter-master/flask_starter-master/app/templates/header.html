@@ -7,16 +7,28 @@
     <ul class="navbar-nav mr-auto">
 	{% if  session['loggedin'] == True %}
       <li class="nav-item active">
-        <a class="nav-link" href="{{ url_for('instruction') }}">instruction</a>
+        <a class="nav-link" href="{{ url_for('instruction') }}">Add Instruction</a>
       </li>
 	  <li class="nav-item active">
-        <a class="nav-link" href="{{ url_for('recipe') }}">recipe</a>
+        <a class="nav-link" href="{{ url_for('recipe') }}">Add Recipe</a>
+      </li>
+	<li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('recipesearch') }}">Search</a>
       </li>
 	  <li class="nav-item active">
-        <a class="nav-link" href="{{ url_for('meal') }}">meal</a>
+        <a class="nav-link" href="{{ url_for('meal') }}">Add Meal</a>
       </li>
 	  <li class="nav-item active">
-        <a class="nav-link" href="{{ url_for('getcaloriecount') }}">mealplan</a>
+        <a class="nav-link" href="{{ url_for('getcaloriecount') }}">Generate Mealplan</a>
+      </li>
+	  <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('mealpland') }}">View Mealplan</a>
+      </li>
+	  <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('kitchen') }}">Edit Kitchen</a>
+      </li>
+	  <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('shoppinglist') }}">Shopping List</a>
       </li>
 	{% else %}
       <li class="nav-item active">

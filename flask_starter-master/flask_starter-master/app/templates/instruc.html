@@ -8,12 +8,16 @@
       {{ form.csrf_token }}
 	  
       <div class="form-group">
-        {{ form.stepnum.label }}
-        {{ form.stepnum(class='form-control') }}
+        {{ form.step1.label }}
+        {{ form.step1(class='form-control') }}
       </div>
 	  <div class="form-group">
-        {{ form.instruction.label }}
-        {{ form.instruction(class='form-control') }}
+        {{ form.step2.label }}
+        {{ form.step2(class='form-control') }}
+      </div>
+	  <div class="form-group">
+        {{ form.step3.label }}
+        {{ form.step3(class='form-control') }}
       </div>
       <button type="submit" name="submit" class="btn btn-primary btn-block">Add</button>
     </form>

@@ -17,8 +17,9 @@ class UserForm(FlaskForm):
 class InstructionForm(FlaskForm):
 	#instrucid = StringField('InstructionId', validators=[InputRequired()])
 	#recid = StringField('RecipeId', validators=[InputRequired()])
-	stepnum = StringField('StepNum', validators=[InputRequired()])
-	instruction = StringField('Instruction', validators=[InputRequired()])
+	step1 = StringField('Step 1', validators=[InputRequired()])
+	step2 = StringField('Step 2', validators=[InputRequired()])
+	step3 = StringField('Step 3', validators=[InputRequired()])
 
 class IngredientsForm(FlaskForm):
 	#ingredid = StringField('IngredientId', validators=[InputRequired()])

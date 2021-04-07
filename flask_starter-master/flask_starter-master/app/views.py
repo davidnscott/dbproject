@@ -122,11 +122,12 @@ def instruction():
 	form = InstructionForm()
 	print("OMEGA")
 	if request.method == 'POST' and form.validate_on_submit():
-		stepnum = request.form['stepnum']
-		instruction = request.form['instruction']
+		step1 = request.form['step1']
+		step2 = request.form['step2']
+		step3 = request.form['step3']
 		#measurement = request.form['measurement']
 		cursor = mysql.connection.cursor()
-		cursor.execute(''' INSERT INTO Instruction (StepNum, Instruction) VALUES(%s,%s)''',(stepnum, instruction))
+		cursor.execute(''' INSERT INTO Instruction (Step1,Step2,Step3) VALUES(%s,%s,%s)''',(step1, step2,step3))
 		mysql.connection.commit()
 		cursor.close()
 		flash("Succesfully added recipe!!")
