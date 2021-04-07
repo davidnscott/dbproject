@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h2>Recipe</h2>
+{% include 'flash_messages.html' %}
+<div class="allproperties">
+<table>
+<thead>
+<td>RecipeID</td>
+<td>Description/Name</td>
+<td>Creation Date</td>
+<td>Type Of Diet</td>
+<td>Step1</td>
+<td>Step2</td>
+<td>Step3</td>
+<td>Ingredient</td>
+<td>Measurement</td>
+
+</thead>
+<tr>
+{% for i in recipe: %}
+  <div class="property">
+		<td>{{i}}</td>
+  </div>
+{% endfor %}
+</tr>
+</div>
+</table>
+{% endblock %}

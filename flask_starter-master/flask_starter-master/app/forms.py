@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, TextAreaField, DateField
+from wtforms import StringField, PasswordField, TextAreaField, DateField, BooleanField 
 from wtforms.validators import InputRequired, Email, DataRequired
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 
@@ -32,17 +32,18 @@ class RecipeForm(FlaskForm):
 	#recid = StringField('RecId', validators=[InputRequired()])
 	instrucid = TextAreaField('Instruction ID', validators=[InputRequired()])
 	ingredid = TextAreaField('Ingredient ID', validators=[InputRequired()])
-	desc = TextAreaField('Description', validators=[InputRequired()])
+	desc = TextAreaField('Description / Name', validators=[InputRequired()])
 	#numofcals = StringField('Number of Calories', validators=[InputRequired()])
 	typeofdiet = StringField('Type of Diet', validators=[InputRequired()])
 	servings = StringField('Servings', validators=[InputRequired()])
 
 class CalorieForm(FlaskForm):
 	caloriecount = StringField('Max Calorie Count')
+	
 class MealForm(FlaskForm):
 	#mealid = StringField('MealId',validators=[DataRequired()])
 	recid = StringField('Recipe Id', validators=[InputRequired()])
-	name = StringField('Meal Name', validators=[DataRequired()])
+	#name = StringField('Meal Name', validators=[DataRequired()])
 	mealtype = StringField('Type of Meal', validators=[DataRequired()])
 	#day = StringField('Day of the Week', validators=[DataRequired()])
 	numofcals = StringField('Number of Calories', validators=[InputRequired()])
@@ -60,11 +61,12 @@ class MealPlanForm(FlaskForm):
 	dow = StringField('Day of Week', validators=[InputRequired()])
 
 class KitchenForm(FlaskForm):
-	#kid = StringField('KitchenId', validators=[InputRequired()])
-	#slid = StringField('ShoppingListId', validators=[InputRequired()])
-	ingredid = StringField('Ingredient Id', validators=[InputRequired()])
+	ingredid = BooleanField('Ingredient Id')
 
 class ShoppingListForm(FlaskForm):
 	#slid = StringField('ShoppingListId',validators=[InputRequired()])
 	kid = StringField('KitchenId', validators=[InputRequired()])
 	ingredid = StringField('Ingredient ID',validators=[InputRequired()])
+	
+class SearchForm(FlaskForm):
+	name = StringField('Recipe Name', validators=[InputRequired()])

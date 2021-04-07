@@ -5,12 +5,10 @@ Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
 
-from faker import Faker
-import pandas as pd
 from app import app
 from flask import render_template, request, redirect, url_for,Flask, flash, session, send_from_directory
 from flask_login import login_user, logout_user, current_user, login_required
-from app.forms import UserForm, LoginForm, IngredientsForm, InstructionForm, RecipeForm, MealForm, MealPlanForm, KitchenForm, ShoppingListForm, CalorieForm
+from app.forms import UserForm, LoginForm, IngredientsForm, InstructionForm, RecipeForm, MealForm, MealPlanForm, KitchenForm, ShoppingListForm, CalorieForm, SearchForm
 from flask_mysqldb import MySQL
 from datetime import date
 from werkzeug.utils import secure_filename
@@ -157,13 +155,39 @@ def recipe():
 		return render_template("home.html")
 	return render_template("recipe.html", form=form)
 	
+@app.route('/search', methods = ['POST', 'GET'])
+def recipesearch():
+	form = SearchForm()
+	if request.method == 'POST' and form.validate_on_submit():
+		name = request.form['name']
+		return redirect(url_for("searchresults",search=name))
+	return render_template("search.html",form=form)
+
+@app.route('/search/<search>')
+def searchresults(search):
+	cursor = mysql.connection.cursor()
+	likeString = "%" + search + "%"
+	cursor.execute('''Select recid,RDescription from Recipe where RDescription like %s ''',(likeString,))
+	results = cursor.fetchall()
+	mysql.connection.commit()
+	cursor.close()
+	return render_template("results.html",results=results)
+	
+@app.route('/recipe/<recipeid>')
+def viewrecipe(recipeid):
+	cursor = mysql.connection.cursor()
+	cursor.execute('''call recipe_display(%s) ''',(recipeid,))
+	recipe = cursor.fetchone()
+	cursor.close()
+	return render_template("recipedisplay.html",recipe=recipe)
+	
 @app.route('/meal', methods = ['POST', 'GET'])
 def meal():
 	form = MealForm()
 	print("OMEGA")
 	if request.method == 'POST' and form.validate_on_submit():
 		recid = request.form['recid']
-		name = request.form['name']
+		#name = request.form['name']
 		mealtype = request.form['mealtype']
 		numofcals = request.form['numofcals']
 		photo = form.photo.data
@@ -171,6 +195,8 @@ def meal():
 		photo.save(os.path.join(app.config['UPLOAD_FOLDER'],file))
 		#measurement = request.form['measurement']
 		cursor = mysql.connection.cursor()
+		cursor.execute(''' select RDescription from recipe where recid = %s''',(recid,))
+		name = cursor.fetchone()
 		cursor.execute(''' INSERT INTO Meal (RecID, NameofMeal,TypeofMeal,NumofCalories,ImageFileName) VALUES(%s,%s,%s,%s,%s)''',(recid, name,mealtype,numofcals,file))
 		mysql.connection.commit()
 		cursor.close()
@@ -178,23 +204,32 @@ def meal():
 		return render_template("home.html")
 	return render_template("meal.html", form=form)
 
-#@app.route('/mealplan')
+@app.route('/mealplan', methods = ['POST', 'GET'])
 def getcaloriecount():
 	form = CalorieForm()
 	if request.method == 'POST' and form.validate_on_submit():
 		caloriecount = request.form['caloriecount']
+		print("check1\n\n\n\n\n\n",caloriecount)
+		if caloriecount == "":
+			return redirect(url_for("mealplan",caloriecount=0))
+		else:
+			return redirect(url_for("mealplan",caloriecount=caloriecount))
 	return render_template("caloriecount.html",form=form)
 
-@app.route('/mealplan')
-def mealplan():
+@app.route('/mealplan/<caloriecount>')
+def mealplan(caloriecount):
 	cursor = mysql.connection.cursor()
 	cursor.execute('''Delete from MealPlan where Email = %s ''',(session['email'],))
 	mysql.connection.commit()
 	days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+	cursor.execute('''select min(numofcalories) from Meal''')
+	minimumcalories = cursor.fetchone()
 	for dow in days:
 		cals = []
 		meal = []
 		for i in range(3):
+			if int(caloriecount) >= minimumcalories[0]:
+				cursor.execute('''select MealID from Meal where numofcalories <= %s''',(caloriecount,))
 			cursor.execute('''select MealID from Meal''')
 			meals = cursor.fetchall()
 			print("check\n\n\n\n",meals,len(meals),meals[0])
@@ -221,6 +256,7 @@ def mealplan():
 		mysql.connection.commit()
 	cursor.execute('''select breakfast,lunch,dinner,TotalCalories,DayofWeek  from MealPlan where Email = %s''',(session['email'],))
 	plan = cursor.fetchall()
+	print("check3\n\n\n\n\n\n",plan)
 	cursor.close()
 	return render_template("mealplan.html", plan=plan[:7])
 
@@ -232,22 +268,41 @@ def mealpland():
 	cursor.close()
 	return render_template("mealplan.html", plan=plan[:7])
 
-@app.route('/kitchen')
+@app.route('/kitchen', methods = ['POST', 'GET'])
 def kitchen():
-	cursor = mysql.connection.cursor()
-	cursor.execute('''select IngredientName from Ingredients''')
+	'''form = KitchenForm()
+	if request.method == 'POST' and form.validate_on_submit():
+		for i in range(18):
+			ingred = request.form['ingredid']'''
+	cursor = mysql.connection.cursor()		
+	if request.method == 'POST':
+		lst = request.form.getlist('add')
+		cursor.execute('''delete from kitchen where email = %s''',(session['email'],))
+		print("check3\n\n\n\n\n\n",lst)
+		for i in lst:
+			cursor.execute('''insert into kitchen(ingredientid,email) values(%s,%s)''',(i,session['email']))
+		mysql.connection.commit()
+	cursor.execute('''select IngredientName,IngredientID from Ingredients''')
 	names = cursor.fetchall()
 	lst = [False]*len(names)
 	cursor.execute('''select IngredientID  from kitchen where Email = %s''',(session['email'],))
 	lst2 = cursor.fetchall()
-	for i in lst2:
-		lst[i-1] = True
+	#for i in lst2:
+		#lst[i-1] = True
 	cursor.close()
-	return render_template("kitchen.html", lst=lst, names=names)
+	return render_template("kitchen.html", names=names,count=len(names))
 
-def addingred(ingredid):
+@app.route('/shoppinglist')
+def shoppinglist():
 	cursor = mysql.connection.cursor()
-	cursor.execute('''insert into kitchen(Email,IngredientID) Values(%s,%s)''',(session['email'],igredid))
+	cursor.execute('''call generate_shopping_list(%s)''',(session['email'],))
+	lst = cursor.fetchall()
+	cursor.close()
+	return render_template("shoppinglist.html",lst=lst)
+	
+def addingred(names):
+	cursor = mysql.connection.cursor()
+	cursor.execute('''insert into kitchen(Email,IngredientID) Values(%s,%s)''',(session['email'],names))
 	cursor.close()
 
 def removeingred():

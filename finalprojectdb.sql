@@ -1,4 +1,4 @@
-drop database if exists MealPlanOrganizer;
+/*drop database if exists MealPlanOrganizer;
 create database if not exists MealPlanOrganizer;
 use MealPlanOrganizer;
 
@@ -85,4 +85,19 @@ create table Shopping_List(
     Foreign key (IngredientID) references Ingredients(IngredientID) on delete cascade on update cascade
 
 );
+
+DELIMITER //
+create procedure generate_shopping_list (in email varchar(200))
+begin
+select distinct(IngredientName) from Recipe natural join ingredients where IngredientID not in (select IngredientID from Kitchen) and IngredientID in (select IngredientID from mealplan natural join meal natural join recipe where email = email);
+END //
+DELIMITER ;
+*/
+DELIMITER //
+create procedure recipe_display (in id varchar(200))
+begin
+Select recid,RDescription,creationdate,typeofdiet,step1,step2,step3,ingredientname,measurement from Recipe natural join ingredients natural join instruction where recid = id;
+END //
+DELIMITER ;
+
 

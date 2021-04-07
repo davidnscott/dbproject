@@ -11,7 +11,7 @@
         {{ form.caloriecount.label }}
         {{ form.caloriecount(class='form-control') }}
       </div>
-      <a href="{{ url_for('mealplan' , caloriecount=caloriecount)}}" class="btn" id="viewprop">Generate</a>
+      <button type="submit">Generate</button>
     </form>
   </div>
 {% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h2>Shopping List Items</h2>
+{% include 'flash_messages.html' %}
+<div class="allproperties">
+<ul>
+{% for i in lst: %}
+  <div class="property">
+  <li>
+	{{ i[0] }}
+</li>
+</div>
+{% endfor %}
+</ul>
+</table>
+{% endblock %}

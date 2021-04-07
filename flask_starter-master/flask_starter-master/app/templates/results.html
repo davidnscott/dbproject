@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h2>Meal Plans</h2>
+{% include 'flash_messages.html' %}
+<div class="allproperties">
+<ul>
+{% for i in results: %}
+  <div class="property">
+  <li>
+  <a href="{{ url_for('viewrecipe', recipeid=i[0]) }}" class="btn">{{i[1]}}</a>
+</li>
+</div>
+{% endfor %}
+</ul>
+</table>
+{% endblock %}

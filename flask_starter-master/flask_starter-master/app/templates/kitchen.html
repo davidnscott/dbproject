@@ -3,21 +3,26 @@
 {% block main %}
 <h2>Kitchen</h2>
 {% include 'flash_messages.html' %}
+<form action="{{ url_for('kitchen') }}" method="post" enctype="multipart/form-data">
 <div class="allproperties">
 <table>
-{% for i in range(len(names)): %}
+{% for i in range(count): %}
   <div class="property">
   <tr>
-		<td>{{names[i]}}</td>
+		<td>{{names[i][0]}}</td>
 		<td>
-			{{lst[i]}}
+			
+			<input type="checkbox" name="add" value="{{names[i][1]}}">
 		</td>
+
 	</tr>
+	</form>
   <p>
    </p>
   </div>
   </div>
 {% endfor %}
+<button type="submit">submit</button>
 </div>
 </table>
 {% endblock %}
